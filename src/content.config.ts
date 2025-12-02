@@ -83,12 +83,6 @@ const home = defineCollection({
       imageAlt: z.string().default(""),
       title: z.string(),
       content: z.string(),
-      button: z
-        .object({
-          label: z.string(),
-          link: z.string().optional(),
-        })
-        .optional(),
     }),
 });
 

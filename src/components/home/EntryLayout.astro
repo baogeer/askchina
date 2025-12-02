@@ -31,22 +31,11 @@ const { image, imageAlt, title, content, button } = entry.data;
                 loading="eager"
               />
               </div>
-              
+
             )
           }
           <h1 set:html={markdownify(title)} class="mb-4" />
           <p set:html={markdownify(content)} class="mb-8" />
-          {
-            button && (
-              <Button
-                label={button.label}
-                link={button.link}
-                newtab
-                hoverInvert
-                color=""
-              />
-            )
-          }
         </div>
       </div>
     </div>
