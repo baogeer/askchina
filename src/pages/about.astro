@@ -1,9 +1,19 @@
 ---
-import type { AboutEntry } from "@/types";
-import EntryLayout from "@components/about/EntryLayout.astro";
-import { getIndex } from "@lib/contentParser";
+import ContentLayout from "@/layouts/content.astro";
+import BaseLayout from "@/layouts/base.astro";
+import { getEntry, render } from "astro:content";
 
-const entry = (await getIndex("about")) as AboutEntry;
+const entry = await getEntry("views", "about");
+
+if (!entry) {
+  return Astro.redirect("/404");
+}
+
+const { Content } = await render(entry);
 ---
 
-<EntryLayout entry={entry} />
+<BaseLayout entry={entry}>
+  <ContentLayout>
+    <Content />
+  </ContentLayout>
+</BaseLayout>

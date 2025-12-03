@@ -1,42 +1,37 @@
-import mdx from "@astrojs/mdx";
-import react from "@astrojs/react";
-import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
-import AutoImport from "astro-auto-import";
+// @ts-check
 import { defineConfig } from "astro/config";
-import remarkCollapse from "remark-collapse";
-import remarkToc from "remark-toc";
-import rehypeKatex from "rehype-katex";
-import remarkMath from "remark-math";
-import cloudflare from "@astrojs/cloudflare";
+import tailwindcss from "@tailwindcss/vite";
+import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
+import { modifiedTime, readingTime } from "./src/lib/utils/remarks.mjs";
+import { SITE } from "./src/lib/config";
+import keystatic from "@keystatic/astro";
+import react from "@astrojs/react";
+import { loadEnv } from "vite";
+import pagefind from "astro-pagefind";
+
+const { RUN_KEYSTATIC } = loadEnv(import.meta.env.MODE, process.cwd(), "");
+
+const integrations = [mdx(), sitemap(), pagefind()];
+
+if (RUN_KEYSTATIC === "true") {
+  integrations.push(react());
+  integrations.push(keystatic());
+}
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://janedoe.com",
-  base: "/",
-  trailingSlash: "ignore",
-  prefetch: {
-    prefetchAll: true
-  },
-  adapter: cloudflare(),
-  integrations: [react(), sitemap(), tailwind({
-    config: {
-      applyBaseStyles: false
-    }
-  }), AutoImport({
-    imports: ["@components/common/Button.astro", "@shortcodes/Accordion", "@shortcodes/Notice", "@shortcodes/Youtube", "@shortcodes/Tabs", "@shortcodes/Tab"]
-  }), mdx()],
+  site: SITE.url,
+  base: SITE.basePath,
   markdown: {
-    remarkPlugins: [remarkToc, [remarkCollapse, {
-      test: "Table of contents"
-    }], remarkMath],
-    rehypePlugins: [[rehypeKatex, {}]],
-    shikiConfig: {
-      themes: { // https://shiki.style/themes
-        light: "light-plus",
-        dark: "dark-plus",
-      } 
-    },
-    extendDefaultPlugins: true
+    remarkPlugins: [readingTime, modifiedTime],
+  },
+  image: {
+    responsiveStyles: true,
+    breakpoints: [640, 1024],
+  },
+  integrations,
+  vite: {
+    plugins: [tailwindcss()],
   },
 });
