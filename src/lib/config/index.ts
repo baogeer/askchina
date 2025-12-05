@@ -1,8 +1,8 @@
 import type { Link } from "../types";
 
 export const SITE = {
-  title: "Astro News",
-  description: "A news website built with Astro",
+  title: "Ask China",
+  description: "The world's first open Q&A community dedicated to China. Ask, answer, and discover the China you never knew.",
   author: "Mohammad Rahmani",
   url: "https://astro-news-six.vercel.app",
   github: "https://github.com/Mrahmani71/astro-news",
@@ -62,7 +62,7 @@ export const OTHER_LINKS: Link[] = [
     text: "RSS",
   },
   {
-    href: "https://astro-news-six.vercel.app/sitemap-index.xml",
+    href: "https://www.ask-china.com/sitemap.xml",
     text: "Sitemap",
   },
 ];
