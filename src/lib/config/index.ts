@@ -58,11 +58,11 @@ export const OTHER_LINKS: Link[] = [
     text: "Cookie Policy",
   },
   {
-    href: "https://astro-news-six.vercel.app/rss.xml",
+    href: "/rss.xml",
     text: "RSS",
   },
   {
-    href: "https://www.ask-china.com/sitemap.xml",
+    href: "/sitemap.xml",
     text: "Sitemap",
   },
 ];
